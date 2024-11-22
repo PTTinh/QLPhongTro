@@ -18,8 +18,8 @@ return new class extends Migration
             $table->float('usable_area')->nullable(); //diện tích sử dụng
             $table->text('description')->nullable(); //mô tả
             $table->integer('capacity')->nullable(); //số người
+            $table->boolean('status')->default(false); //trạng thái
             $table->decimal('price', 22, 2); //giá
-            $table->string('photo')->nullable(); //ảnh
             $table->timestamps();
         });
     }
