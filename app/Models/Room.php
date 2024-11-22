@@ -13,9 +13,9 @@ class Room extends Model
         'area',
         'usable_area',
         'description',
+        'status',
         'capacity',
         'price',
-        'photo',
     ];
 
 }
