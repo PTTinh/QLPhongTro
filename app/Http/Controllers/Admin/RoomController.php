@@ -1,17 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\BaseController;
+use App\Models\Room;
 use Illuminate\Http\Request;
 
-class RoomController extends Controller
+class RoomController extends BaseController
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('rooms.index');
+        $rooms = Room::all();
+        return view('rooms.index')->with('title', 'Quản lý phòng trọ')->with('rooms', $rooms);
     }
 
     /**
@@ -19,7 +22,7 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        return view('rooms.create')->with('title', 'Thêm phòng trọ');
     }
 
     /**
@@ -27,7 +30,19 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'area' => 'required',
+            'usable_area' => 'required',
+            'description' => 'nullable',
+            'capacity' => 'required',
+            'price' => 'required',
+        ]);
+        $data = $request->all();
+        unset($data['_token']);
+        $room = new Room($data);
+        $room->save();
+        return redirect()->route('rooms.index');        
     }
 
     /**

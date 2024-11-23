@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('lib/bootstrap-5.3.3-dist/css/bootstrap.min.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
     <title>{{ $attributes['title'] }}</title>
 </head>
 
@@ -19,7 +19,7 @@
             <span>Admin</span>
         </a>
 
-        <ul class="navbar-nav flex-row d-md-none">
+        <ul class="navbar-nav flex-row d-lg-none">
             <li class="nav-item text-nowrap">
                 <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
@@ -42,19 +42,24 @@
                             data-bs-target="#sidebarMenu" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body d-flex flex-column p-0 pt-lg-3 overflow-y-auto">
-                        <ul class="nav flex-column">
+                        <ul class="nav flex-column list-group">
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page"
-                                    href="#">
+                                <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('rooms') ? 'myactive' : '' }}"
+                                    href="/rooms">
                                     <i class='bx bx-home'></i>
                                     Phòng
+                                </a>
+                                <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('/') ? 'myactive' : '' }}"
+                                    href="/">
+                                    <i class='bx bx-user nav-icon'></i>
+                                    Người Thuê
                                 </a>
                             </li>
                         </ul>
 
                         <hr class="my-3">
 
-                        <ul class="nav flex-column mb-auto">
+                        <ul class="list-group-item nav flex-column mb-auto list-group">
                             <li class="nav-item">
                                 <a class="nav-link d-flex align-items-center gap-2" href="#">
                                     <i class='bx bx-cog'></i>
@@ -62,10 +67,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2" href="#">
-                                    <i class='bx bx-door-open'></i>
-                                    Sign out
-                                </a>
+                                <form action="{{ route('logout') }}" method="GET">
+                                    @csrf
+                                    <button class="nav-link d-flex align-items-center gap-2" type="submit">
+                                        <i class='bx bx-door-open'></i>
+                                        Sign out
+                                    </button>
+                                </form>
                             </li>
                         </ul>
                     </div>
