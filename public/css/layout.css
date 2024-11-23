@@ -109,10 +109,13 @@
   
   .myactive{
     background-color: #b6c0ceb7;
-    color: white;
+    color: #015aff;
     border-right: 5px solid #015aff;
   }
-  
+  .myactive:hover{
+    background-color: #4d8bff9f;
+    color: #ffffff;
+  }
   @media (max-width: 992px) {
     .myactive {
       border-right: none;

@@ -58,7 +58,8 @@ class RoomController extends BaseController
      */
     public function edit(string $id)
     {
-        //
+        $room = Room::find($id);
+        return view('rooms.edit')->with('title', 'Chỉnh sửa phòng trọ')->with('room', $room);
     }
 
     /**
@@ -66,7 +67,19 @@ class RoomController extends BaseController
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'area' => 'required',
+            'usable_area' => 'required',
+            'description' => 'nullable',
+            'capacity' => 'required',
+            'price' => 'required',
+        ]);
+        $data = $request->all();
+        unset($data['_token']);
+        $room = Room::find($id);
+        $room->update($data);
+        return redirect()->route('rooms.index');
     }
 
     /**
@@ -74,6 +87,8 @@ class RoomController extends BaseController
      */
     public function destroy(string $id)
     {
-        //
+        $room = Room::find($id);
+        $room->delete();
+        return redirect()->route('rooms.index');
     }
 }

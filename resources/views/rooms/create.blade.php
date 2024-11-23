@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col">
             <div class="card">
                 <div class="card-header">
                     <h4>Thêm Phòng</h4>
@@ -24,7 +24,7 @@
                         <x-app-input id="price" type="number" name="price" label="Giá Phòng" placeholder="Nhập giá phòng" required />
                         <x-app-input id="capacity" type="number" name="capacity" label="Số Người Ở" placeholder="Nhập số người ở" required />
                         <div class="mb-3">
-                            <label for="description" class="form-label">Mô tả<span class="text-danger">*</span></label>
+                            <label for="description" class="form-label">Mô tả</label>
                             <textarea name="description" id="description" class="form-control" rows="5"></textarea>
                         </div>
                         {{-- <div class="form-group mb-3">
