@@ -20,8 +20,4 @@ class Lessee extends Model
         'cccd_back_image',
     ];
     
-    public function contractDetails()
-    {
-        return $this->hasMany(ContractDetails::class, 'id_lessee');
-    }
 }

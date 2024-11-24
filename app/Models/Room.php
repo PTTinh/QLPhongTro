@@ -17,5 +17,4 @@ class Room extends Model
         'capacity',
         'price',
     ];
-
 }

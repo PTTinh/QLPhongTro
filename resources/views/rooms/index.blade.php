@@ -12,14 +12,14 @@
         <table class="table table-striped table-sm border-2">
             <thead class="table-dark">
                 <tr class="text-center">
-                    <th scope="col">TT</th>
-                    <th scope="col">Tên phòng</th>
-                    <th scope="col">Diện tích</th>
-                    <th scope="col">Diện tích dùng</th>
-                    <th scope="col">Số người ở</th>
-                    <th scope="col">Giá</th>
-                    <th scope="col">Trạng thái</th>
-                    <th scope="col">Thao tác</th>
+                    <th scope="col" class="text-truncate" style="max-width: 100px;">TT</th>
+                    <th scope="col" class="text-truncate" style="max-width: 100px;">Tên phòng</th>
+                    <th scope="col" class="text-truncate" style="max-width: 100px;">Diện tích</th>
+                    <th scope="col" class="text-truncate" style="max-width: 100px;">Diện tích dùng</th>
+                    <th scope="col" class="text-truncate" style="max-width: 100px;">Số người ở</th>
+                    <th scope="col" class="text-truncate" style="max-width: 100px;">Giá</th>
+                    <th scope="col" class="text-truncate" style="max-width: 100px;">Trạng thái</th>
+                    <th scope="col" class="text-truncate" style="max-width: 100px;">Thao tác</th>
                 </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -78,7 +78,7 @@
             </tbody>
         </table>
         <!-- Modal -->
-        <div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">

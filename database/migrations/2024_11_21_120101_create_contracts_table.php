@@ -16,9 +16,9 @@ return new class extends Migration
             $table->date('created_date')->nullable(); // ngày tạo
             $table->date('start_date')->nullable(); // ngày bắt đầu
             $table->date('end_date')->nullable(); // ngày kết thúc
-            $table->integer('monthly_value')->nullable(); // giá trị hợp đồng theo tháng
-            $table->integer('electricity_fee')->nullable(); // tiền điện
-            $table->integer('water_fee')->nullable(); // tiền nước
+            $table->integer('month')->nullable(); // tháng
+            $table->integer('price_eletric')->nullable(); // giá điện
+            $table->integer('price_water')->nullable(); // giá nước
             $table->integer('other_fees')->nullable(); // các khoản phụ thu khác
             $table->foreignId('created_by')->constrained('users'); // người tạo hợp đồng
             $table->timestamps();

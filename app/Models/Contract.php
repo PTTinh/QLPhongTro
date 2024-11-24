@@ -9,15 +9,18 @@ class Contract extends Model
     protected $table = 'contracts';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'name',
-        'description',
+        'created_date',
         'start_date',
         'end_date',
-        'status',
+        'month',
+        'price_eletric',
+        'price_water',
+        'other_fees',
+        'created_by',
     ];
     
-    public function contractDetails()
+    public function user()
     {
-        return $this->hasMany(ContractDetails::class, 'contract_id');
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

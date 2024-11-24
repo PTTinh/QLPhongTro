@@ -49,10 +49,20 @@
                                     <i class='bx bx-home'></i>
                                     Phòng
                                 </a>
-                                <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('/') ? 'myactive' : '' }}"
-                                    href="/">
+                                <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('lessees') ? 'myactive' : '' }}"
+                                    href="/lessees">
                                     <i class='bx bx-user nav-icon'></i>
                                     Người Thuê
+                                </a>
+                                <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('contracts') ? 'myactive' : '' }}"
+                                    href="/contracts">
+                                    <i class='bx bx-file nav-icon'></i>
+                                    Hợp Đồng
+                                </a>
+                                <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('contract-details') ? 'myactive' : '' }}"
+                                    href="/contract-details">
+                                    <i class='bx bx-file nav-icon'></i>
+                                    chi tiết hợp Đồng
                                 </a>
                             </li>
                         </ul>
