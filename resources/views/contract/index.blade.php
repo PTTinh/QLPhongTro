@@ -29,16 +29,16 @@
                         <td>{{ $contract->start_date }}</td>
                         <td>{{ $contract->end_date }}</td>
                         <td>
-                            <div class="d-none d-lg-block border-4 border-start">
+                            <div class="d-none d-lg-flex border-4 border-start justify-content-center gap-2">
+                                <a class="btn btn-success" href="{{ route('contracts.show', $contract->id) }}" title="Xem">
+                                    <i class='bx bx-show'></i>
+                                </a>
+                                <a class="btn btn-warning" href="{{ route('contracts.edit', $contract->id) }}" title="Sửa">
+                                    <i class='bx bx-edit'></i>
+                                </a>
                                 <form action="{{ route('contracts.destroy', $contract->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a class="btn btn-success" href="{{ route('contracts.show', $contract->id) }}" title="Xem">
-                                        <i class='bx bx-show'></i>
-                                    </a>
-                                    <a class="btn btn-warning" href="{{ route('contracts.edit', $contract->id) }}" title="Sửa">
-                                        <i class='bx bx-edit'></i>
-                                    </a>
                                     <button class="btn btn-danger" type="submit" title="Xóa"
                                         onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">
                                         <i class='bx bx-trash'></i>
@@ -90,6 +90,54 @@
                                     <x-app-input id="start_date" name="start_date" type="date" label="Ngày Bắt Đầu" placeholder="Nhập ngày bắt đầu" required />
                                     <x-app-input id="end_date" name="end_date" type="date" label="Ngày Kết Thúc" placeholder="Nhập ngày kết thúc" required />
                                     <x-app-input id="month" name="month" type="number" label="Số Tháng" placeholder="Nhập số tháng" required />
+                                    <div class="mb-3">
+                                        <label for="id_lessee" class="form-label">Tên người thuê</label>
+                                        <select class="form-select" name="id_lessee" id="id_lessee">
+                                            @foreach ($lessees as $lessee)
+                                                <option value="{{ $lessee->id }}">{{ $lessee->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <label for="room_id" class="form-label">Phòng</label>
+                                        <select class="form-select" name="room_id" id="room_id">
+                                            @foreach ($rooms as $room)
+                                                <option value="{{ $room->id }}">{{ $room->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <x-app-input id="price_eletric" name="price_eletric" type="number" label="Giá Điện" placeholder="Nhập giá điện" required />
+                                    <x-app-input id="price_water" name="price_water" type="number" label="Giá Nước" placeholder="Nhập giá nước" required />
+                                    <x-app-input id="other_fees" name="other_fees" type="number" label="Phí Khác" placeholder="Nhập phí khác" required />
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3 col-4 offset-4">
+                                <i class='bx bx-save me-2'></i>
+                                Lưu
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="modal fade" id="addContractModal" tabindex="-1" aria-labelledby="addContractModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addContractModalLabel">Thêm Hợp Đồng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('contracts.store') }}" method="POST">
+                            @include('include._error')
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <x-app-input id="start_date" name="start_date" type="date" label="Ngày Bắt Đầu" placeholder="Nhập ngày bắt đầu" required />
+                                    <x-app-input id="end_date" name="end_date" type="date" label="Ngày Kết Thúc" placeholder="Nhập ngày kết thúc" required />
+                                    <x-app-input id="month" name="month" type="number" label="Số Tháng" placeholder="Nhập số tháng" required />
                                 </div>
                                 <div class="col-lg-6">
                                     <x-app-input id="price_eletric" name="price_eletric" type="number" label="Giá Điện" placeholder="Nhập giá điện" required />
@@ -105,6 +153,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </x-layouts>

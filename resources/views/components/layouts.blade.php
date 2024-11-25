@@ -62,7 +62,7 @@
                                 <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('contract-details') ? 'myactive' : '' }}"
                                     href="/contract-details">
                                     <i class='bx bx-file nav-icon'></i>
-                                    chi tiết hợp Đồng
+                                    Chi tiết hợp đồng
                                 </a>
                             </li>
                         </ul>
