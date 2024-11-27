@@ -5,7 +5,8 @@ for (const element of btnShowEdit) {
     element.addEventListener('click', async function () {
         let urlGet = element.getAttribute('data-urlGet');
         let urlPut = element.getAttribute('data-urlPut');
-
+        let urlImage1 = element.getAttribute('data-urlimage1');
+        let urlImage2 = element.getAttribute('data-urlimage2');
         let response = await fetch(urlGet);
         let data = await response.json();
       
@@ -16,8 +17,8 @@ for (const element of btnShowEdit) {
         document.getElementById('dob-update').value = data.dob;
         document.getElementById('job-update').value = data.job;
         document.getElementById('cccd_number-update').value = data.cccd_number;
-        document.getElementById('cccd_front_image-update').src = data.cccd_front_image;
-        document.getElementById('cccd_back_image-update').src = data.cccd_back_image;
+        document.getElementById('cccd_front_image-update').src = urlImage1;
+        document.getElementById('cccd_back_image-update').src = urlImage2;
 
         document.getElementById('f-update-lessee').action = urlPut;
         modalUpdate.show();

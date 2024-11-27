@@ -14,7 +14,6 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
-                    @include('include._error')
                     <div class="card-header text-center">
                         <h4>Đăng nhập</h4>
                     </div>

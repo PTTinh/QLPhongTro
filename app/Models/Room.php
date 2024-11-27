@@ -17,4 +17,8 @@ class Room extends Model
         'capacity',
         'price',
     ];
+    public function contract()
+    {
+        return $this->hasOne(Contract::class, 'room_id');
+    }
 }

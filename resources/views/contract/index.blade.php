@@ -32,17 +32,17 @@
                         <td>{{ $contract->end_date }}</td>
                         <td>
                             <div class="d-none d-lg-flex justify-content-center gap-2">
-                                <a class="btn btn-success" href="{{ route('contracts.show', $contract->id) }}" title="Xem">
+                                <a class="btn btn-success" href="{{ route('contracts.show', $contract->id) }}"
+                                    title="Xem">
                                     <i class='bx bx-show'></i>
                                 </a>
-                                <button class="btn btn-warning js-edit-contract" type="button" 
-                                        data-id="{{ $contract->id }}"
-                                        data-urlGet="{{ route('contracts.edit', $contract->id) }}"
-                                        data-urlPut="{{ route('contracts.update', $contract->id) }}"
-                                        data-urlGetRoom="{{ route('rooms.create') }}"
-                                        title="Sửa">
-                                            <i class='bx bx-edit'></i>
-                                        </button>
+                                <button class="btn btn-warning js-edit-contract" type="button"
+                                    data-id="{{ $contract->id }}"
+                                    data-urlGet="{{ route('contracts.edit', $contract->id) }}"
+                                    data-urlPut="{{ route('contracts.update', $contract->id) }}"
+                                    data-urlGetRoom="{{ route('rooms.create') }}" title="Sửa">
+                                    <i class='bx bx-edit'></i>
+                                </button>
                                 <form action="{{ route('contracts.destroy', $contract->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -58,15 +58,15 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li class="d-flex align-items-center justify-content-center gap-2">
-                                        <a class="btn btn-success" href="{{ route('contract-details.index', $contract->id) }}" title="Xem">
+                                        <a class="btn btn-success" href="{{ route('contracts.show', $contract->id) }}"
+                                            title="Xem">
                                             <i class='bx bx-show'></i>
                                         </a>
-                                        <button class="btn btn-warning js-edit-contract" type="button" 
-                                        data-id="{{ $contract->id }}"
-                                        data-urlGet="{{ route('contracts.edit', $contract->id) }}"
-                                        data-urlPut="{{ route('contracts.update', $contract->id) }}"
-                                        data-urlGetRoom="{{ route('rooms.create') }}"
-                                        title="Sửa">
+                                        <button class="btn btn-warning js-edit-contract" type="button"
+                                            data-id="{{ $contract->id }}"
+                                            data-urlGet="{{ route('contracts.edit', $contract->id) }}"
+                                            data-urlPut="{{ route('contracts.update', $contract->id) }}"
+                                            data-urlGetRoom="{{ route('rooms.create') }}" title="Sửa">
                                             <i class='bx bx-edit'></i>
                                         </button>
                                         <form action="{{ route('contracts.destroy', $contract->id) }}" method="POST">
@@ -88,7 +88,6 @@
         <!-- Modal Thêm Hợp Đồng -->
         <x-app-modal id="addContractModal" title="Thêm Hợp Đồng">
             <form action="{{ route('contracts.store') }}" method="POST">
-                @include('include._error')
                 @csrf
                 <div class="row">
                     <div class="col-lg-6">
@@ -103,14 +102,44 @@
                                 @endforeach
                             </select>
                         </div>
-                        <x-app-input id="start_date" name="start_date" type="date" label="Ngày Bắt Đầu" placeholder="Nhập ngày bắt đầu" required />
-                        <x-app-input id="end_date" name="end_date" type="date" label="Ngày Kết Thúc" placeholder="Nhập ngày kết thúc" required />
-                        <x-app-input id="month" name="month" type="number" label="Số Tháng" placeholder="Nhập số tháng" required />
+                        <x-app-input id="start_date" name="start_date" type="date" label="Ngày Bắt Đầu"
+                            placeholder="Nhập ngày bắt đầu" required />
+                        <x-app-input id="end_date" name="end_date" type="date" label="Ngày Kết Thúc"
+                            placeholder="Nhập ngày kết thúc" required />
+                        <div class="mb-3">
+                            <label for="month" class="form-label">Số Tháng</label>
+                            <div class="input-group">
+                                <input type="number" name="month" id="month" class="form-control"
+                                    placeholder="Nhập số tháng" required>
+                                <span class="input-group-text">Tháng</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-6">
-                        <x-app-input id="price_eletric" name="price_eletric" type="number" label="Giá Điện" placeholder="Nhập giá điện" required />
-                        <x-app-input id="price_water" name="price_water" type="number" label="Giá Nước" placeholder="Nhập giá nước" required />
-                        <x-app-input id="other_fees" name="other_fees" type="number" label="Phí Khác" placeholder="Nhập phí khác" required />
+                        <div class="mb-3">
+                            <label for="price_eletric" class="form-label">Giá Điện</label>
+                            <div class="input-group">
+                                <input type="number" name="price_eletric" id="price_eletric" class="form-control"
+                                    placeholder="Nhập giá điện" required>
+                                <span class="input-group-text">VNĐ/số</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price_water" class="form-label">Giá Nước</label>
+                            <div class="input-group">
+                                <input type="number" name="price_water" id="price_water" class="form-control"
+                                    placeholder="Nhập giá nước" required>
+                                <span class="input-group-text">VNĐ/số</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="other_fees" class="form-label">Phí Khác</label>
+                            <div class="input-group">
+                                <input type="number" name="other_fees" id="other_fees" class="form-control"
+                                    placeholder="Nhập phí khác" required>
+                                <span class="input-group-text">VNĐ</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-3 col-4 offset-4">
@@ -122,7 +151,6 @@
         {{-- Modal Sửa Hợp Đồng --}}
         <x-app-modal id="editContractModal" title="Sửa Hợp Đồng">
             <form id="f-edit-contract" action="#" method="POST">
-                @include('include._error')
                 @csrf
                 @method('PUT')
                 <div class="row">
@@ -133,14 +161,44 @@
                                 {{-- thêm tù js --}}
                             </select>
                         </div>
-                        <x-app-input id="start_date-update" name="start_date" type="date" label="Ngày Bắt Đầu" placeholder="Nhập ngày bắt đầu" required />
-                        <x-app-input id="end_date-update" name="end_date" type="date" label="Ngày Kết Thúc" placeholder="Nhập ngày kết thúc" required />
-                        <x-app-input id="month-update" name="month" type="number" label="Số Tháng" placeholder="Nhập số tháng" required />
+                        <x-app-input id="start_date-update" name="start_date" type="date" label="Ngày Bắt Đầu"
+                            placeholder="Nhập ngày bắt đầu" required />
+                        <x-app-input id="end_date-update" name="end_date" type="date" label="Ngày Kết Thúc"
+                            placeholder="Nhập ngày kết thúc" required />
+                        <div class="mb-3">
+                            <label for="month-update" class="form-label">Số Tháng</label>
+                            <div class="input-group">
+                                <input type="number" name="month" id="month-update" class="form-control"
+                                    placeholder="Nhập số tháng" required>
+                                <span class="input-group-text">Tháng</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-6">
-                        <x-app-input id="price_eletric-update" name="price_eletric" type="number" label="Giá Điện" placeholder="Nhập giá điện" required />
-                        <x-app-input id="price_water-update" name="price_water" type="number" label="Giá Nước" placeholder="Nhập giá nước" required />
-                        <x-app-input id="other_fees-update" name="other_fees" type="number" label="Phí Khác" placeholder="Nhập phí khác" required />
+                        <div class="mb-3">
+                            <label for="price_eletric-update" class="form-label">Giá Điện</label>
+                            <div class="input-group">
+                                <input type="number" name="price_eletric" id="price_eletric-update" class="form-control"
+                                    placeholder="Nhập giá điện" required>
+                                <span class="input-group-text">VNĐ/số</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="price_water-update" class="form-label">Giá Nước</label>
+                            <div class="input-group">
+                                <input type="number" name="price_water" id="price_water-update" class="form-control"
+                                    placeholder="Nhập giá nước" required>
+                                <span class="input-group-text">VNĐ/số</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="other_fees-update" class="form-label">Phí Khác</label>
+                            <div class="input-group">
+                                <input type="number" name="other_fees" id="other_fees-update" class="form-control"
+                                    placeholder="Nhập phí khác" required>
+                                <span class="input-group-text">VNĐ</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-3 col-4 offset-4">

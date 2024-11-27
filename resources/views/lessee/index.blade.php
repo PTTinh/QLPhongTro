@@ -8,6 +8,7 @@
             </button>
         </div>
     </div>
+    @include('include._alert')
     <div class="table small">
         <table class="table table-striped table-sm border-2">
             <thead class="table-dark">
@@ -24,18 +25,22 @@
                 @foreach ($lessees as $lessee)
                     <tr class="text-center">
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td title="{{ $lessee->name }}" class="text-truncate" style="max-width: 100px;">{{ $lessee->name }}</td>
+                        <td title="{{ $lessee->name }}" class="text-truncate" style="max-width: 100px;">
+                            {{ $lessee->name }}</td>
                         <td>{{ $lessee->phone }}</td>
                         <td>{{ $lessee->email }}</td>
-                        <td title="{{ $lessee->address }}" class="text-truncate" style="max-width: 100px;">{{ $lessee->address }}</td>
+                        <td title="{{ $lessee->address }}" class="text-truncate" style="max-width: 100px;">
+                            {{ $lessee->address }}</td>
                         <td>
                             <div class="d-none d-lg-flex justify-content-center gap-2">
                                 <button class="btn btn-success js-show-edit-lessee" title="Sửa"
-                                    data-id="{{ $lessee->id }}"
-                                    data-urlGet="{{ route('lessees.edit', $lessee->id) }}"
-                                    data-urlPut="{{ route('lessees.update', $lessee->id) }}">
-                                    <i class='bx bx-show'></i>
-                                </button>
+                                data-id="{{ $lessee->id }}"
+                                data-urlGet="{{ route('lessees.edit', $lessee->id) }}"
+                                data-urlPut="{{ route('lessees.update', $lessee->id) }}"
+                                data-urlImage1="{{ asset('images/' . $lessee->cccd_front_image) }}"
+                                data-urlImage2="{{ asset('images/' . $lessee->cccd_back_image) }}">
+                                <i class='bx bx-show'></i>
+                            </button>
                                 <form action="{{ route('lessees.destroy', $lessee->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -51,10 +56,12 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li class="d-flex align-items-center justify-content-center gap-1 ms-1 me-1">
-                                        <button class="btn btn-success js-show-eidt-lessee" title="xem"
+                                        <button class="btn btn-success js-show-edit-lessee" title="Sửa"
                                             data-id="{{ $lessee->id }}"
                                             data-urlGet="{{ route('lessees.edit', $lessee->id) }}"
-                                            data-urlPut="{{ route('lessees.update', $lessee->id) }}">
+                                            data-urlPut="{{ route('lessees.update', $lessee->id) }}"
+                                            data-urlImage1="{{ asset('images/' . $lessee->cccd_front_image) }}"
+                                            data-urlImage2="{{ asset('images/' . $lessee->cccd_back_image) }}">
                                             <i class='bx bx-show'></i>
                                         </button>
                                         <form action="{{ route('lessees.destroy', $lessee->id) }}" method="POST">
@@ -76,29 +83,35 @@
     </div>
     <!-- Modal Thêm Người Thuê -->
     <x-app-modal id="addLesseeModal" title="Thêm Người Thuê">
-        <form action="{{ route('lessees.store') }}" method="POST">
+        <form action="{{ route('lessees.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal-body row">
                 <div class="col-lg-6">
-                    <x-app-input id="name" name="name" label="Tên Người Thuê" placeholder="Nhập tên người thuê" required />
-                    <x-app-input id="phone" name="phone" type="text" label="Số Điện Thoại" placeholder="Nhập số điện thoại" required />
-                    <x-app-input id="email" name="email" type="email" label="Email" placeholder="Nhập email" required />
+                    <x-app-input id="name" name="name" label="Tên Người Thuê" placeholder="Nhập tên người thuê"
+                        required />
+                    <x-app-input id="phone" name="phone" type="number" label="Số Điện Thoại"
+                        placeholder="Nhập số điện thoại" required />
+                    <x-app-input id="email" name="email" type="email" label="Email" placeholder="Nhập email"
+                        required />
                     <div class="mb-3">
                         <label for="address" class="form-label">Địa Chỉ</label>
                         <textarea class="form-control" id="address" name="address" rows="4" placeholder="Nhập địa chỉ"></textarea>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <x-app-input id="job" name="job" label="Nghề Nghiệp" placeholder="Nhập nghề nghiệp" required />
-                    <x-app-input id="dob" name="dob" type="date" label="Ngày Sinh" placeholder="Nhập ngày sinh" required />
-                    <x-app-input id="cccd_number" name="cccd_number" type="text" label="Số CCCD" placeholder="Nhập số CCCD" required />
+                    <x-app-input id="job" name="job" label="Nghề Nghiệp" placeholder="Nhập nghề nghiệp"
+                        required />
+                    <x-app-input id="dob" name="dob" type="date" label="Ngày Sinh"
+                        placeholder="Nhập ngày sinh" required />
+                    <x-app-input id="cccd_number" name="cccd_number" type="number" label="Số CCCD"
+                        placeholder="Nhập số CCCD" required />
                     <div class="mb-3">
                         <label for="cccd_front_image" class="form-label">Ảnh mặt trước CCCD</label>
-                        <input type="file" class="form-control" id="cccd_front_image" name="cccd_front_image" >
+                        <input type="file" class="form-control" id="cccd_front_image" name="cccd_front_image">
                     </div>
                     <div class="mb-3">
                         <label for="cccd_back_image" class="form-label">Ảnh mặt sau CCCD</label>
-                        <input type="file" class="form-control" id="cccd_back_image" name="cccd_back_image" >
+                        <input type="file" class="form-control" id="cccd_back_image" name="cccd_back_image">
                     </div>
                 </div>
             </div>
@@ -108,35 +121,45 @@
             </div>
         </form>
     </x-app-modal>
-    
+
     <!-- Modal Sửa TT Người Thuê -->
     <x-app-modal id="showLesseeModal" title="Thông Tin Người Thuê">
-        <form id="f-update-lessee" method="POST">
+        <form id="f-update-lessee" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="modal-body row">
                 <div class="col-lg-6">
-                    <x-app-input id="name-update" name="name" label="Tên Người Thuê" placeholder="Nhập tên người thuê" required />
-                    <x-app-input id="phone-update" name="phone" type="text" label="Số Điện Thoại" placeholder="Nhập số điện thoại" required />
-                    <x-app-input id="email-update" name="email" type="email" label="Email" placeholder="Nhập email" required />
+                    <x-app-input id="name-update" name="name" label="Tên Người Thuê"
+                        placeholder="Nhập tên người thuê" required />
+                    <x-app-input id="phone-update" name="phone" type="number" label="Số Điện Thoại"
+                        placeholder="Nhập số điện thoại" required />
+                    <x-app-input id="email-update" name="email" type="email" label="Email"
+                        placeholder="Nhập email" required />
                     <div class="mb-3">
                         <label for="address-update" class="form-label">Địa Chỉ</label>
                         <textarea class="form-control" id="address-update" name="address" rows="4" placeholder="Nhập địa chỉ"></textarea>
                     </div>
+                    <x-app-input id="job-update" name="job" label="Nghề Nghiệp" placeholder="Nhập nghề nghiệp"
+                        required />
                 </div>
                 <div class="col-lg-6">
-                    <x-app-input id="job-update" name="job" label="Nghề Nghiệp" placeholder="Nhập nghề nghiệp" required />
-                    <x-app-input id="dob-update" name="dob" type="date" label="Ngày Sinh" placeholder="Nhập ngày sinh" required />
-                    <x-app-input id="cccd_number-update" name="cccd_number" type="text" label="Số CCCD" placeholder="Nhập số CCCD" required />
+                    <x-app-input id="dob-update" name="dob" type="date" label="Ngày Sinh"
+                        placeholder="Nhập ngày sinh" required />
+                    <x-app-input id="cccd_number-update" name="cccd_number" type="number" label="Số CCCD"
+                        placeholder="Nhập số CCCD" required />
                     <div class="mb-3">
-                        <label for="cccd_front_image-update" class="form-label">Ảnh mặt trước CCCD</label>
-                        <img src="#" alt="cccd_front_image" class="img-fluid" id="cccd_front_image-update">
-                        <input type="file" class="form-control" id="cccd_front_image-update" name="cccd_front_image" >
+                        <label for="cccd_front_image-update" class="form-label">Ảnh mặt trước CCCD</label><br>
+                        <img src="#" alt="cccd_front_image" class="img-fluid" id="cccd_front_image-update"
+                            style="max-width: 100px;">
+                        <input type="file" class="form-control" id="cccd_front_image-update"
+                            name="cccd_front_image">
                     </div>
                     <div class="mb-3">
-                        <label for="cccd_back_image-update" class="form-label">Ảnh mặt sau CCCD</label>
-                        <img src="#" alt="cccd_back_image" class="img-fluid" id="cccd_back_image-update">
-                        <input type="file" class="form-control" id="cccd_back_image-update" name="cccd_back_image" >
+                        <label for="cccd_back_image-update" class="form-label">Ảnh mặt sau CCCD</label><br>
+                        <img src="#" alt="cccd_back_image" class="img-fluid" id="cccd_back_image-update"
+                            style="max-width: 100px;">
+                        <input type="file" class="form-control" id="cccd_back_image-update"
+                            name="cccd_back_image">
                     </div>
                 </div>
             </div>

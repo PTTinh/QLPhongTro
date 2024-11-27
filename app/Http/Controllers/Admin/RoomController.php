@@ -24,7 +24,7 @@ class RoomController extends BaseController
     public function create()
     {
         $rooms = Room::all();
-        if(!$rooms) {
+        if (!$rooms) {
             abort(404);
         }
         return response()->json($rooms);
@@ -35,19 +35,14 @@ class RoomController extends BaseController
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'area' => 'required|numeric',
-            'usable_area' => 'required|numeric|lte:area',
-            'description' => 'nullable',
-            'capacity' => 'required',
-            'price' => 'required',
-        ]);
+        $this->custom_validation($request);
         $data = $request->all();
         unset($data['_token']);
         $room = new Room($data);
         $room->save();
-        return redirect()->route('rooms.index');        
+        $alert = 'success';
+        $message = 'Thêm phòng trọ thành công';
+        return redirect()->route('rooms.index')->with($alert, $message);
     }
 
     /**
@@ -55,7 +50,7 @@ class RoomController extends BaseController
      */
     public function show(string $id)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -64,7 +59,7 @@ class RoomController extends BaseController
     public function edit(string $id)
     {
         $room = Room::find($id);
-        if(!$room) {
+        if (!$room) {
             abort(404);
         }
         return response()->json($room);
@@ -75,19 +70,14 @@ class RoomController extends BaseController
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'area' => 'required|numeric',
-            'usable_area' => 'required|numeric|lte:area',
-            'description' => 'nullable',
-            'capacity' => 'required',
-            'price' => 'required',
-        ]);
+        $this->custom_validation($request);
         $data = $request->all();
         unset($data['_token']);
         $room = Room::find($id);
         $room->update($data);
-        return redirect()->route('rooms.index');
+        $alert = 'success';
+        $message = 'Cập nhật phòng trọ thành công';
+        return redirect()->route('rooms.index')->with($alert, $message);
     }
 
     /**
@@ -95,11 +85,40 @@ class RoomController extends BaseController
      */
     public function destroy(string $id)
     {
-        if(Contract::where('room_id', $id)->count() > 0) {
-            return redirect()->route('rooms.index')->with('error', 'Phòng trọ đã có hợp đồng');
-        }
         $room = Room::find($id);
-        $room->delete();
-        return redirect()->route('rooms.index');
+        if (Contract::where('room_id', $id)->count() > 0) {
+            $alert = 'error';
+            $message = 'Không thể xóa phòng trọ đã có hợp đồng';
+        } else {
+            $room->delete();
+            $alert = 'success';
+            $message = 'Xóa phòng trọ thành công';
+        }
+        return redirect()->route('rooms.index')->with($alert, $message);
+    }
+    public function custom_validation($request)
+    {
+        $rules = [
+            'name' => 'required|max:250',
+            'area' => 'required|numeric',
+            'usable_area' => 'required|numeric|lte:area',
+            'description' => 'nullable',
+            'capacity' => 'required',
+            'price' => 'required|numeric',
+        ];
+        $messages = [
+            'name.required' => 'Tên phòng không được để trống',
+            'name.max' => 'Tên phòng không được quá 250 ký tự',
+            'area.required' => 'Diện tích không được để trống',
+            'area.numeric' => 'Diện tích phải là số',
+            'usable_area.required' => 'Diện tích sử dụng không được để trống',
+            'usable_area.numeric' => 'Diện tích sử dụng phải là số',
+            'usable_area.lte' => 'Diện tích sử dụng phải nhỏ hơn hoặc bằng diện tích',
+            'description.nullable' => 'Mô tả không được để trống',
+            'capacity.required' => 'Sức chứa không được để trống',
+            'price.required' => 'Giá không được để trống',
+            'price.numeric' => 'Giá phải là số',
+        ];
+        $request->validate($rules, $messages);
     }
 }
