@@ -10,6 +10,14 @@
         @method('PUT')
         <div class="row">
             <div class="col-lg-6">
+                <div class="mb-3">
+                    <label for="room_id" class="form-label">Phòng</label>
+                    <select class="form-select" name="room_id" id="room_id">
+                        @foreach ($rooms as $room)
+                            <option value="{{ $room->id }}">{{ $room->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <x-app-input id="start_date" name="start_date" type="date" label="Ngày Bắt Đầu" placeholder="Nhập ngày bắt đầu" required :value="$contract->start_date" />
                 <x-app-input id="end_date" name="end_date" type="date" label="Ngày Kết Thúc" placeholder="Nhập ngày kết thúc" required :value="$contract->end_date" />
                 <x-app-input id="month" name="month" type="number" label="Số Tháng" placeholder="Nhập số tháng" required :value="$contract->month" />

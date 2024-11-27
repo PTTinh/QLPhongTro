@@ -10,15 +10,10 @@ class ContractDetails extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         'contract_id',
-        'room_id',
         'id_lessee',
         'is_signed',
         'signed_at',
     ];
-    public function room()
-    {
-        return $this->belongsTo(Room::class, 'room_id');
-    }
     
     public function lessee()
     {

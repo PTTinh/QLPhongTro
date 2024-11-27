@@ -8,6 +8,7 @@ use App\Models\ContractDetails;
 use App\Models\Lessee;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContractDetailController extends Controller
 {
@@ -16,8 +17,7 @@ class ContractDetailController extends Controller
      */
     public function index()
     {
-        $contractDetails = ContractDetails::all();
-        return view('contract_detail.index')->with('title', 'Quản lý chi tiết hợp đồng')->with('contractDetails', $contractDetails);
+       
     }
 
     /**
@@ -25,10 +25,7 @@ class ContractDetailController extends Controller
      */
     public function create()
     {
-        $contracts = Contract::all();
-        $rooms = Room::all();
-        $lessees = Lessee::all();
-        return view('contract_detail.create')->with('title', 'Tạo mới chi tiết hợp đồng')->with('contracts', $contracts)->with('rooms', $rooms)->with('lessees', $lessees);
+      
     }
 
     /**
@@ -37,13 +34,23 @@ class ContractDetailController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'contract_id' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'month' => 'required',
+            'price_eletric' => 'required',
+            'price_water' => 'required',
+            'other_fees' => 'required',
             'room_id' => 'required',
             'id_lessee' => 'required'
         ]);
-        $data = $request->all();
-        unset($data['_token']);
-        $contractDetail = new ContractDetails($data);
+        $contract = $request->only('start_date', 'end_date', 'month', 'price_eletric', 'price_water', 'other_fees');
+        $contract['created_date'] = date('Y-m-d');
+        $contract['created_by'] = Auth::id();
+        $contract = new Contract($contract);
+        $contract->save();
+        $contractDetail = $request->only('contract_id', 'room_id', 'id_lessee');
+        $contractDetail['contract_id'] = $contract->id;
+        $contractDetail = new ContractDetails($contractDetail);
         $contractDetail->save();
         return redirect()->route('contract-details.index');
     }
@@ -61,11 +68,7 @@ class ContractDetailController extends Controller
      */
     public function edit(string $id)
     {
-        $contractDetail = ContractDetails::find($id);
-        $contracts = Contract::all();
-        $rooms = Room::all();
-        $lessees = Lessee::all();
-        return view('contract_detail.edit')->with('title', 'Chỉnh sửa chi tiết hợp đồng')->with('contractDetail', $contractDetail)->with('contracts', $contracts)->with('rooms', $rooms)->with('lessees', $lessees);
+       
     }
 
     /**
@@ -74,15 +77,27 @@ class ContractDetailController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'contract_id' => 'required',
-            'room_id' => 'required',
-            'id_lessee' => 'required'
+            'id_lessee' => 'required',  
         ]);
         $data = $request->all();
         unset($data['_token']);
-        $contractDetail = ContractDetails::find($id);
-        $contractDetail->update($data);
-        return redirect()->route('contract-details.index');
+        $count = ContractDetails::where('contract_id', $id)->count();
+        $capacity = Room::find(Contract::find($id)->room_id)->capacity;
+        // Kiểm tra số lượng người thuê đã đủ chưa
+        if ($count >= $capacity) {
+            return redirect()->route('contracts.show', $id)->with('error', 'Hợp đồng đã đủ người thuê');
+        }
+        $contractdetail = ContractDetails::find($id);
+        if($contractdetail == null) {
+            $contractdetail = new ContractDetails();
+            $contractdetail['contract_id'] = $id;
+            $contractdetail['id_lessee'] = $data['id_lessee'];
+            $contractdetail->save();
+        }else{
+            $contractdetail['id_lessee'] = $data['id_lessee'];
+            ContractDetails::create($contractdetail->toArray());
+        }
+        return redirect()->route('contracts.show', $contractdetail->contract_id);
     }
 
     /**
@@ -90,8 +105,11 @@ class ContractDetailController extends Controller
      */
     public function destroy(string $id)
     {
+        if(ContractDetails::select('contract_id')->count() == 1){
+            return redirect()->back();
+        }
         $contractDetail = ContractDetails::find($id);
         $contractDetail->delete();
-        return redirect()->route('contract-details.index');
+        return redirect()->back();
     }
 }

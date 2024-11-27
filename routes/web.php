@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Admin\ContractController;
 use App\Http\Controllers\Admin\ContractDetailController;
 use App\Http\Controllers\Admin\LesseeController;
+use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\RoomController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;

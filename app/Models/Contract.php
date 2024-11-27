@@ -17,10 +17,19 @@ class Contract extends Model
         'price_water',
         'other_fees',
         'created_by',
+        'room_id',
     ];
     
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+    public function room()
+    {
+        return $this->belongsTo(Room::class, 'room_id');
+    }
+    public function contractDetails()
+    {
+        return $this->hasMany(ContractDetails::class, 'contract_id');
     }
 }

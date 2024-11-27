@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\BaseController;
+use App\Models\ContractDetails;
 use App\Models\Lessee;
 use Illuminate\Http\Request;
 
@@ -35,8 +36,8 @@ class LesseeController extends BaseController
             'phone' => 'required',
             'email' => 'required',
             'address' => 'required',
-            'occupation' => 'required',
-            'birth_year' => 'required',
+            'job' => 'required',
+            'dob' => 'required',
             'cccd_number' => 'required',
             'cccd_front_image' => 'nullable',
             'cccd_back_image' => 'nullable',
@@ -62,7 +63,10 @@ class LesseeController extends BaseController
     public function edit(string $id)
     {
         $lessee = Lessee::find($id);
-        return view('lessee.edit')->with('title', 'Chỉnh sửa người thuê')->with('lessee', $lessee);
+        if(!$lessee) {
+            return redirect()->route('lessees.index');
+        }
+        return response()->json($lessee);
     }
 
     /**
@@ -75,8 +79,8 @@ class LesseeController extends BaseController
             'phone' => 'required',
             'email' => 'required',
             'address' => 'required',
-            'occupation' => 'required',
-            'birth_year' => 'required',
+            'job' => 'required',
+            'dob' => 'required|date',
             'cccd_number' => 'required',
             'cccd_front_image' => 'nullable',
             'cccd_back_image' => 'nullable',
@@ -93,6 +97,9 @@ class LesseeController extends BaseController
      */
     public function destroy(string $id)
     {
+        if(ContractDetails::where('id_lessee', $id)->count() > 0){
+            return redirect()->route('lessees.index');
+        }
         $lessee = Lessee::find($id);
         $lessee->delete();
         return redirect()->route('lessees.index');

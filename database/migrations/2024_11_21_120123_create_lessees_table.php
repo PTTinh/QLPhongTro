@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('phone')->unique()->nullable();; //số điện thoại
             $table->string('email')->nullable(); //email
             $table->string('address')->nullable(); //địa chỉ
-            $table->string('occupation')->nullable(); // nghề nghiệp
-            $table->year('birth_year')->nullable(); // năm sinh
+            $table->string('job')->nullable(); // nghề nghiệp
+            $table->date('dob')->nullable(); // ngày sinh
             $table->string('cccd_number')->unique(); // số cccd
             $table->string('cccd_front_image')->nullable(); // ảnh cccd mặt trước
             $table->string('cccd_back_image')->nullable(); // ảnh cccd mặt sau

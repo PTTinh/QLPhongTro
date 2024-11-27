@@ -13,11 +13,15 @@ class Lessee extends Model
         'phone',
         'email',
         'address',
-        'occupation',
-        'birth_year',
+        'job',
+        'dob',
         'cccd_number',
         'cccd_front_image',
         'cccd_back_image',
     ];
     
+    public function contractDetails()
+    {
+        return $this->hasMany(ContractDetails::class, 'id_lessee', 'id');
+    }
 }

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('contract_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('contract_id')->constrained('contracts'); // hợp đồng
-            $table->foreignId('room_id')->constrained('rooms'); // phòng 
             $table->foreignId('id_lessee')->constrained('lessees'); // người thuê
             $table->boolean('is_signed')->default(false); // đã ký tên chưa
             $table->timestamp('signed_at')->nullable(); // thời gian ký

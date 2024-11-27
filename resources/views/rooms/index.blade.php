@@ -33,14 +33,13 @@
                         <td>{{ number_format($room->price) }} VNĐ</td>
                         <td>{{ isset($room->status) ? 'Còn trống' : 'Đã thuê' }}</td>
                         <td>
-                            <div class="d-none d-lg-flex border-4 border-start justify-content-center gap-2">
-                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addLesseeModal">
-                                    <i class='bx bx-user-plus'></i> 
+                            <div class="d-none d-lg-flex justify-content-center gap-2">
+                                <button class="btn btn-primary js-edit-room" title="Sửa" 
+                                            data-id="{{ $room->id }}"
+                                            data-urlGet="{{ route('rooms.edit', $room->id) }}"
+                                            data-urlPut="{{ route('rooms.update', $room->id) }}">
+                                            <i class='bx bx-edit'></i>
                                 </button>
-                                <a class="btn btn-warning" href="{{ route('rooms.edit', $room->id) }}"
-                                    title="Sửa">
-                                    <i class='bx bx-edit'></i>
-                                </a>
                                 <form action="{{ route('rooms.destroy', $room->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -55,18 +54,17 @@
                                     <i class='bx bx-dots-horizontal-rounded'></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li class="d-flex align-items-center">
-                                        <a class="btn btn-success ms-2" href="#" title="Thêm Người Thuê">
-                                            <i class='bx bx-user-plus'></i>
-                                        </a>
-                                        <a class="btn btn-warning ms-1" href="{{ route('rooms.edit', $room->id) }}"
-                                            title="Sửa">
+                                    <li class="d-flex align-items-center justify-content-center gap-1 ms-1 me-1">
+                                        <button class="btn btn-primary js-edit-room" title="Sửa" 
+                                            data-id="{{ $room->id }}"
+                                            data-urlGet="{{ route('rooms.edit', $room->id) }}"
+                                            data-urlPut="{{ route('rooms.update', $room->id) }}">
                                             <i class='bx bx-edit'></i>
-                                        </a>
+                                        </button>
                                         <form action="{{ route('rooms.destroy', $room->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger ms-1" type="submit" title="Xóa"
+                                            <button class="btn btn-danger" type="submit" title="Xóa"
                                                 onclick="return confirm('Bạn có chắc chắn muốn xóa không?')">
                                                 <i class='bx bx-trash'></i>
                                             </button>
@@ -79,63 +77,69 @@
                 @endforeach
             </tbody>
         </table>
-        <!-- Modal -->
-        <div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addRoomModalLabel">Thêm Phòng</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('rooms.store') }}" method="POST">
-                            @csrf
-                            <x-app-input id="name" name="name" label="Tên Phòng" placeholder="Nhập tên phòng"
-                                required />
-                            <x-app-input id="area" name="area" type="number" label="Diện Tích"
-                                placeholder="Nhập diện tích" required />
-                            <x-app-input id="usable_area" name="usable_area" type="number"
-                                label="Diện Tích Sử Dụng" placeholder="Nhập diện tích sử dụng" required />
-                            <x-app-input id="price" type="number" name="price" label="Giá Phòng"
-                                placeholder="Nhập giá phòng" required />
-                            <x-app-input id="capacity" type="number" name="capacity" label="Số Người Ở"
-                                placeholder="Nhập số người ở" required />
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Mô tả</label>
-                                <textarea name="description" id="description" class="form-control" rows="5"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Thêm Phòng</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="addLesseeModal" tabindex="-1" aria-labelledby="addLesseeModalLabel">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addLesseeModalLabel">Thêm Người Thuê</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="#" method="POST">
-                            @csrf
-                            <x-app-input id="name" name="name" label="Tên Người Thuê"
-                                placeholder="Nhập tên người thuê" required />
-                            <x-app-input id="phone" name="phone" type="number" label="Số Điện Thoại"
-                                placeholder="Nhập số điện thoại" required />
-                            <x-app-input id="email" name="email" type="email" label="Email"
-                                placeholder="Nhập email" />
-                            <x-app-input id="address" name="address" label="Địa Chỉ" placeholder="Nhập địa chỉ"
-                                required />
-                            <x-app-input id="room_id" name="room_id" type="number" label="Phòng"
-                                placeholder="Nhập phòng" required />
-                            <button type="submit" class="btn btn-primary w-100">Thêm Người Thuê</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
+    <!-- Modal Thêm Phòng -->
+    <x-app-modal id="addRoomModal" title="Thêm Phòng">
+        <form action="{{ route('rooms.store') }}" method="POST">
+            @csrf
+            <div class="modal-body row">
+                <div class="col-lg-6">
+                    <x-app-input id="name" type="text" name="name" label="Tên Phòng"
+                        placeholder="Nhập tên phòng" required />
+                    <x-app-input id="area" type="number" name="area" label="Diện Tích"
+                        placeholder="Nhập diện tích" required />
+                    <x-app-input id="usable_area" type="number" name="usable_area" label="Diện Tích Sử Dụng"
+                        placeholder="Nhập diện tích sử dụng" required />
+                </div>
+                <div class="col-lg-6">
+                    <x-app-input id="price" type="number" name="price" label="Giá Phòng"
+                        placeholder="Nhập giá phòng" required />
+                    <x-app-input id="capacity" type="number" name="capacity" label="Số Người Ở"
+                        placeholder="Nhập số người ở" required />
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Mô tả</label>
+                        <textarea name="description" id="description" class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </form>
+    </x-app-modal>
+    {{-- Modal Sửa Phòng --}}
+    <x-app-modal id="editRoomModal" title="Sửa Phòng">
+        <form id="f-update-room" action="#" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="modal-body row">
+                <div class="col-lg-6">
+                    <x-app-input id="name-update" type="text" name="name" label="Tên Phòng"
+                        placeholder="Nhập tên phòng" required />
+                    <x-app-input id="area-update" type="number" name="area" label="Diện Tích"
+                        placeholder="Nhập diện tích" required />
+                    <x-app-input id="usable_area-update" type="number" name="usable_area" label="Diện Tích Sử Dụng"
+                        placeholder="Nhập diện tích sử dụng" required />
+                </div>
+                <div class="col-lg-6">
+                    <x-app-input id="price-update" type="number" name="price" label="Giá Phòng"
+                        placeholder="Nhập giá phòng" required />
+                    <x-app-input id="capacity-update" type="number" name="capacity" label="Số Người Ở"
+                        placeholder="Nhập số người ở" required />
+                    <div class="mb-3">
+                        <label for="description-update" class="form-label">Mô tả</label>
+                        <textarea name="description" id="description-update" class="form-control" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                </div>
+            </div>
+        </form>
+    </x-app-modal>
+    <x-slot:script>
+        <script src="{{ asset('js/room.js') }}"></script>
+    </x-slot>
 </x-layouts>

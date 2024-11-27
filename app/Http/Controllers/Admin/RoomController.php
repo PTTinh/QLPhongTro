@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\BaseController;
+use App\Models\Contract;
 use App\Models\Room;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,11 @@ class RoomController extends BaseController
      */
     public function create()
     {
-        return view('rooms.create')->with('title', 'Thêm phòng trọ');
+        $rooms = Room::all();
+        if(!$rooms) {
+            abort(404);
+        }
+        return response()->json($rooms);
     }
 
     /**
@@ -32,8 +37,8 @@ class RoomController extends BaseController
     {
         $request->validate([
             'name' => 'required',
-            'area' => 'required',
-            'usable_area' => 'required',
+            'area' => 'required|numeric',
+            'usable_area' => 'required|numeric|lte:area',
             'description' => 'nullable',
             'capacity' => 'required',
             'price' => 'required',
@@ -59,7 +64,10 @@ class RoomController extends BaseController
     public function edit(string $id)
     {
         $room = Room::find($id);
-        return view('rooms.edit')->with('title', 'Chỉnh sửa phòng trọ')->with('room', $room);
+        if(!$room) {
+            abort(404);
+        }
+        return response()->json($room);
     }
 
     /**
@@ -69,8 +77,8 @@ class RoomController extends BaseController
     {
         $request->validate([
             'name' => 'required',
-            'area' => 'required',
-            'usable_area' => 'required',
+            'area' => 'required|numeric',
+            'usable_area' => 'required|numeric|lte:area',
             'description' => 'nullable',
             'capacity' => 'required',
             'price' => 'required',
@@ -87,6 +95,9 @@ class RoomController extends BaseController
      */
     public function destroy(string $id)
     {
+        if(Contract::where('room_id', $id)->count() > 0) {
+            return redirect()->route('rooms.index')->with('error', 'Phòng trọ đã có hợp đồng');
+        }
         $room = Room::find($id);
         $room->delete();
         return redirect()->route('rooms.index');

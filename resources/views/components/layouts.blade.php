@@ -59,11 +59,11 @@
                                     <i class='bx bx-file nav-icon'></i>
                                     Hợp Đồng
                                 </a>
-                                <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('contract-details') ? 'myactive' : '' }}"
+                                {{-- <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('contract-details') ? 'myactive' : '' }}"
                                     href="/contract-details">
                                     <i class='bx bx-file nav-icon'></i>
                                     Chi tiết hợp đồng
-                                </a>
+                                </a> --}}
                             </li>
                         </ul>
 

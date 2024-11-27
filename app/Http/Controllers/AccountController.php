@@ -23,7 +23,7 @@ class AccountController extends Controller
 
         $data = $request->only('email', 'password');
         if (Auth::attempt($data)) {
-            return redirect()->route('rooms.index');
+            return redirect()->route('home');
         }
         return redirect()->route('login')->with('error', 'Đăng nhập thất bại');
     }

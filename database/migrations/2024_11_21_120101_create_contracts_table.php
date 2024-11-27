@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('price_water')->nullable(); // giá nước
             $table->integer('other_fees')->nullable(); // các khoản phụ thu khác
             $table->foreignId('created_by')->constrained('users'); // người tạo hợp đồng
+            $table->foreignId('room_id')->constrained('rooms'); // phòng
             $table->timestamps();
         });
     }
