@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Contract;
 use App\Models\ContractDetails;
-use App\Models\Lessee;
 use App\Models\Room;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ContractDetailController extends Controller
 {
@@ -17,7 +15,7 @@ class ContractDetailController extends Controller
      */
     public function index()
     {
-       
+        abort(404);
     }
 
     /**
@@ -25,7 +23,7 @@ class ContractDetailController extends Controller
      */
     public function create()
     {
-      
+        abort(404);
     }
 
     /**
@@ -33,26 +31,7 @@ class ContractDetailController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'month' => 'required',
-            'price_eletric' => 'required',
-            'price_water' => 'required',
-            'other_fees' => 'required',
-            'room_id' => 'required',
-            'id_lessee' => 'required'
-        ]);
-        $contract = $request->only('start_date', 'end_date', 'month', 'price_eletric', 'price_water', 'other_fees');
-        $contract['created_date'] = date('Y-m-d');
-        $contract['created_by'] = Auth::id();
-        $contract = new Contract($contract);
-        $contract->save();
-        $contractDetail = $request->only('contract_id', 'room_id', 'id_lessee');
-        $contractDetail['contract_id'] = $contract->id;
-        $contractDetail = new ContractDetails($contractDetail);
-        $contractDetail->save();
-        return redirect()->route('contract-details.index');
+        abort(404);
     }
 
     /**
@@ -60,7 +39,7 @@ class ContractDetailController extends Controller
      */
     public function show(string $id)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -68,7 +47,7 @@ class ContractDetailController extends Controller
      */
     public function edit(string $id)
     {
-       
+        abort(404);
     }
 
     /**
@@ -77,7 +56,7 @@ class ContractDetailController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'id_lessee' => 'required',  
+            'id_lessee' => 'required',
         ]);
         $data = $request->all();
         unset($data['_token']);
@@ -88,16 +67,16 @@ class ContractDetailController extends Controller
             return redirect()->route('contracts.show', $id)->with('error', 'Hợp đồng đã đủ người thuê');
         }
         $contractdetail = ContractDetails::find($id);
-        if($contractdetail == null) {
+        if ($contractdetail == null) {
             $contractdetail = new ContractDetails();
             $contractdetail['contract_id'] = $id;
             $contractdetail['id_lessee'] = $data['id_lessee'];
             $contractdetail->save();
-        }else{
+        } else {
             $contractdetail['id_lessee'] = $data['id_lessee'];
             ContractDetails::create($contractdetail->toArray());
         }
-        return redirect()->route('contracts.show', $contractdetail->contract_id);
+        return redirect()->route('contracts.show', $contractdetail->contract_id)->with('success', 'Thêm người thuê thành công');
     }
 
     /**
@@ -105,11 +84,15 @@ class ContractDetailController extends Controller
      */
     public function destroy(string $id)
     {
-        if(ContractDetails::select('contract_id')->count() == 1){
-            return redirect()->back();
-        }
         $contractDetail = ContractDetails::find($id);
-        $contractDetail->delete();
-        return redirect()->back();
+        if (!$contractDetail) {
+            $alert = 'error';
+            $message = 'Không tìm thấy người tham gia hợp đồng';
+        } else {
+            $contractDetail->delete();
+            $alert = 'success';
+            $message = 'Xóa người tham gia hợp đồng thành công';
+        }
+        return redirect()->back()->with($alert, $message);
     }
 }

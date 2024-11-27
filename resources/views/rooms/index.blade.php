@@ -29,7 +29,7 @@
                         <td>{{ $room->name }}</td>
                         <td>{{ $room->area }}m<sup>2</sup></td>
                         <td>{{ $room->usable_area }}m<sup>2</sup></td>
-                        <td>{{ $room->capacity }}</td>
+                        <td>{{ $room->capacity }} người</td>
                         <td>{{ number_format($room->price) }} VNĐ</td>
                         <td>{{ isset($room->status) ? 'Còn trống' : 'Đã thuê' }}</td>
                         <td>
@@ -84,18 +84,38 @@
             @csrf
             <div class="modal-body row">
                 <div class="col-lg-6">
-                    <x-app-input id="name" type="text" name="name" label="Tên Phòng"
+                    <x-app-input id="name" type="text" name="name" label="Tên Phòng:"
                         placeholder="Nhập tên phòng" required />
-                    <x-app-input id="area" type="number" name="area" label="Diện Tích"
-                        placeholder="Nhập diện tích" required />
-                    <x-app-input id="usable_area" type="number" name="usable_area" label="Diện Tích Sử Dụng"
-                        placeholder="Nhập diện tích sử dụng" required />
+                    <div class="mb-3">
+                        <label for="area" class="form-label">Diện Tích</label>
+                        <div class="input-group">
+                            <input type="number" name="area" id="area" class="form-control" placeholder="Nhập diện tích" required>
+                            <span class="input-group-text">m<sup>2</sup></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="usable_area" class="form-label">Diện Tích Sử Dụng</label>
+                        <div class="input-group">
+                            <input type="number" name="usable_area" id="usable_area" class="form-control" placeholder="Nhập diện tích sử dụng" required>
+                            <span class="input-group-text">m<sup>2</sup></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-6">
-                    <x-app-input id="price" type="number" name="price" label="Giá Phòng"
-                        placeholder="Nhập giá phòng" required />
-                    <x-app-input id="capacity" type="number" name="capacity" label="Số Người Ở"
-                        placeholder="Nhập số người ở" required />
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Giá Phòng</label>
+                        <div class="input-group">
+                            <input type="number" name="price" id="price" class="form-control" placeholder="Nhập giá phòng" required>
+                            <span class="input-group-text">VNĐ</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="capacity" class="form-label">Số Người Ở</label>
+                        <div class="input-group">
+                            <input type="number" name="capacity" id="capacity" class="form-control" placeholder="Nhập số người ở" required>
+                            <span class="input-group-text">Người</span>
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Mô tả</label>
                         <textarea name="description" id="description" class="form-control" rows="5"></textarea>
@@ -115,18 +135,38 @@
             @method('PUT')
             <div class="modal-body row">
                 <div class="col-lg-6">
-                    <x-app-input id="name-update" type="text" name="name" label="Tên Phòng"
+                    <x-app-input id="name-update" type="text" name="name" label="Tên Phòng:"
                         placeholder="Nhập tên phòng" required />
-                    <x-app-input id="area-update" type="number" name="area" label="Diện Tích"
-                        placeholder="Nhập diện tích" required />
-                    <x-app-input id="usable_area-update" type="number" name="usable_area" label="Diện Tích Sử Dụng"
-                        placeholder="Nhập diện tích sử dụng" required />
+                    <div class="mb-3">
+                        <label for="area-update" class="form-label">Diện Tích</label>
+                        <div class="input-group">
+                            <input type="number" name="area" id="area-update" class="form-control" placeholder="Nhập diện tích" required>
+                            <span class="input-group-text">m<sup>2</sup></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="usable_area-update" class="form-label">Diện Tích Sử Dụng</label>
+                        <div class="input-group">
+                            <input type="number" name="usable_area" id="usable_area-update" class="form-control" placeholder="Nhập diện tích sử dụng" required>
+                            <span class="input-group-text">m<sup>2</sup></span>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-6">
-                    <x-app-input id="price-update" type="number" name="price" label="Giá Phòng"
-                        placeholder="Nhập giá phòng" required />
-                    <x-app-input id="capacity-update" type="number" name="capacity" label="Số Người Ở"
-                        placeholder="Nhập số người ở" required />
+                    <div class="mb-3">
+                        <label for="price-update" class="form-label">Giá Phòng</label>
+                        <div class="input-group">
+                            <input type="number" name="price" id="price-update" class="form-control" placeholder="Nhập giá phòng" required>
+                            <span class="input-group-text">VNĐ</span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="capacity-update" class="form-label">Số Người Ở</label>
+                        <div class="input-group">
+                            <input type="number" name="capacity" id="capacity-update" class="form-control" placeholder="Nhập số người ở" required>
+                            <span class="input-group-text">Người</span>
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <label for="description-update" class="form-label">Mô tả</label>
                         <textarea name="description" id="description-update" class="form-control" rows="5"></textarea>

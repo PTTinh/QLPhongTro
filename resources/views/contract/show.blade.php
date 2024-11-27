@@ -69,35 +69,6 @@
         </div>
         {{-- Thông tin hợp đồng --}}
         <div class="tab-pane fade m-2 p-1" id="contract">
-            {{-- <form action="{{ route('contracts.update', $contract->id) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="mb-3">
-                            <label for="room_id" class="form-label">Phòng:</label>
-                            <select class="form-select" name="room_id" id="room_id">
-                                @foreach ($rooms as $room)
-                                    <option value="{{ $room->id }}"
-                                        @if ($room->id == $contract->room_id) selected @endif>
-                                        {{ $room->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <x-app-input name="start_date" label="Ngày Bắt Đầu:" type="date" :value="$contract->start_date" />
-                        <x-app-input name="end_date" label="Ngày Kết Thúc:" type="date" :value="$contract->end_date" />
-                        <x-app-input name="month" label="Số Tháng:" type="number" :value="$contract->month" />
-                    </div>
-                    <div class="col-lg-6">
-                        <x-app-input name="price_room" label="Giá Phòng:" type="number" :value="$contract->room->price" />
-                        <x-app-input name="price_eletric" label="Giá Điện:" type="number" :value="$contract->price_eletric" />
-                        <x-app-input name="price_water" label="Giá Nước:" type="number" :value="$contract->price_water" />
-                        <x-app-input name="other_fees" label="Phí Khác:" type="number" :value="$contract->other_fees" />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Lưu</button>
-                </div>
-            </form> --}}
             <div class="row">
                 <div class="col-lg-6">
                     <table class="table">
@@ -155,7 +126,7 @@
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        @include('include._error')
+                        
                         <div class="row">
                             <div class="mb-3">
                                 <label for="id_lessee" class="form-label">Tên người thuê</label>

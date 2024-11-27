@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
@@ -18,7 +18,6 @@
                 class="rounded-circle border border-primary ms-2 me-2" width="30" height="30">
             <span>Admin</span>
         </a>
-
         <ul class="navbar-nav flex-row d-lg-none">
             <li class="nav-item text-nowrap">
                 <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas"
@@ -31,6 +30,7 @@
     </header>
     <div class="container-fluid">
         <div class="row">
+            @include('include._alert')
             <div class="sidebar border border-right d-md-none d-lg-block col-lg-2 p-0 bg-body-tertiary">
                 <div class="offcanvas-lg offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu"
                     aria-labelledby="sidebarMenuLabel">
