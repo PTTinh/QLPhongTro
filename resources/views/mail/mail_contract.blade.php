@@ -64,14 +64,14 @@
                             </table>
                         </div>
                         <div class="col-lg-12">
-                            <form action="{{ route('mail-contract.port') }}" method="POST"
+                            <form action="{{ route('mail-contract.post') }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <table class="table">
                                     <tr>
                                         <th>Số CCCD:</th>
                                         <td colspan="1" class="text-start">
-                                            {{ $contractDetail->lessee->cccd_number }}</td>
+                                            {{ substr($contractDetail->lessee->cccd_number, 0, 3) . '****' . substr($contractDetail->lessee->cccd_number, -3) }}</td>
                                     </tr>
                                     <tr>
                                         <th>Xác Nhận CCCD:</th>
@@ -166,12 +166,9 @@
                             <table class="table">
                                 <tr>
                                     <th>Số CCCD:</th>
-                                    <td colspan="1" class="text-start">{{ $contractDetail->lessee->cccd_number }}
+                                    <td colspan="1" class="text-start">
+                                        {{ substr($contractDetail->lessee->cccd_number, 0, 3) . '****' . substr($contractDetail->lessee->cccd_number, -3) }}
                                     </td>
-                                </tr>
-                                <tr>
-                                    <th>Xác Nhận CCCD:</th>
-                                    <td colspan="1" class="text-end">{{ $contractDetail->cccd_number }}</td>
                                 </tr>
                                 <tr>
                                     <th>Hính mặt trước CCCD:</th>

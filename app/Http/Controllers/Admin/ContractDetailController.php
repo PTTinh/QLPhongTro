@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\sendMail;
 use App\Models\Contract;
 use App\Models\ContractDetails;
+use App\Models\Lessee;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -67,17 +69,12 @@ class ContractDetailController extends Controller
         if ($count >= $capacity) {
             return redirect()->route('contracts.show', $id)->with('error', 'Hợp đồng đã đủ người thuê');
         }
-        $contractdetail = ContractDetails::find($id);
-        if ($contractdetail == null) {
-            $contractdetail = new ContractDetails();
-            $contractdetail['contract_id'] = $id;
-            $contractdetail['id_lessee'] = $data['id_lessee'];
-            $contractdetail->save();
-
-        } else {
-            $contractdetail['id_lessee'] = $data['id_lessee'];
-            ContractDetails::create($contractdetail->toArray());
-        }
+        $contractdetail = new ContractDetails();
+        $contractdetail['contract_id'] = $id;
+        $contractdetail['id_lessee'] = $data['id_lessee'];
+        $contractdetail->save();
+        $lessee = Lessee::find($data['id_lessee']);
+        sendMail::dispatch($lessee->email, $contractdetail->id)->delay(now()->addSeconds(5));
         return redirect()->route('contracts.show', $contractdetail->contract_id)->with('success', 'Thêm người thuê thành công');
     }
 
