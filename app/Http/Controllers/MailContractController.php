@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class MailContractController extends Controller
 {
-    public function index(string $id)
+    public function index(string $id, string $uid)
     {
         $contractDetail = ContractDetails::find($id);
-        if (!$contractDetail) {
+        if (!$contractDetail || $contractDetail->lessee->id != $uid) {
             abort(404);
         }
         return view('mail.mail_contract')->with('contractDetail', $contractDetail);
@@ -51,6 +51,20 @@ class MailContractController extends Controller
                     $alert = 'error';
                     $message = 'Người thuê nhà đã ký hợp đồng rồi';
                 } else {
+                    $file = [];
+                    if($lessee->cccd_front_image) {
+                        $file[] = public_path('images/' . $lessee->cccd_front_image);
+                    }
+                    if($lessee->cccd_back_image) {
+                        $file[] = public_path('images/' . $lessee->cccd_back_image);
+                    }
+                    if(count($file) > 0) {
+                        foreach ($file as $f) {
+                            if (file_exists($f)) {
+                                unlink($f);
+                            }
+                        }
+                    }
                     $cccd_front_image = $request->file('cccd_front_image');
                     $cccd_back_image = $request->file('cccd_back_image');
                     $cccd_front_image_name = time() . '-' . $cccd_front_image->getClientOriginalName();

@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Contract;
+use App\Models\ContractDetails;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -29,7 +30,7 @@ class contractMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contract Mail',
+            subject: 'Mail ký hợp đồng',
         );
     }
 
@@ -39,10 +40,14 @@ class contractMail extends Mailable
 
     public function content(): Content
     {
+        $name = ContractDetails::find($this->id)->lessee->name;
+        $uid = ContractDetails::find($this->id)->lessee->id;
         return new Content(
-            view: 'mail.test',
+            view: 'mail.mail_content',
             with: [
+                'name' => $name,
                 'id' => $this->id,
+                'uid' => $uid
             ],
         );
     }

@@ -10,10 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    if (Auth::check()==false) {
-        return redirect()->route('rooms.index');
-    }
-    return view('home');
+    return redirect()->route('rooms.index');
 })->name('home');
 Route::resources([
     'rooms' => RoomController::class,
@@ -21,7 +18,7 @@ Route::resources([
     'contracts' => ContractController::class,
     'contract-details' => ContractDetailController::class,
 ]);
-Route::get('/mail-contract/{id}', [MailContractController::class, 'index'])->name('mail-contract');
+Route::get('/mail-contract/{id}/{uid}', [MailContractController::class, 'index'])->name('mail-contract');
 Route::post('/mail-contract', [MailContractController::class, 'Mailport'])->name('mail-contract.post');
 Route::get('/login', [AccountController::class, 'login'])->name('login');
 Route::post('/login', [AccountController::class, 'loginPost'])->name('login.post');

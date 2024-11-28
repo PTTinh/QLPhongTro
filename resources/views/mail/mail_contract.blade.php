@@ -69,6 +69,12 @@
                                 @csrf
                                 <table class="table">
                                     <tr>
+                                        <th>Người Thuê:</th>
+                                        <td class="text-start">
+                                            {{ $contractDetail->lessee->name }}
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th>Số CCCD:</th>
                                         <td colspan="1" class="text-start">
                                             {{ substr($contractDetail->lessee->cccd_number, 0, 3) . '****' . substr($contractDetail->lessee->cccd_number, -3) }}</td>
@@ -165,27 +171,25 @@
                         <div class="col-lg-12">
                             <table class="table">
                                 <tr>
+                                    <th>Người Thuê:</th>
+                                    <td class="text-end">
+                                        {{ $contractDetail->lessee->name }}
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th>Số CCCD:</th>
-                                    <td colspan="1" class="text-start">
+                                    <td colspan="1" class="text-end">
                                         {{ substr($contractDetail->lessee->cccd_number, 0, 3) . '****' . substr($contractDetail->lessee->cccd_number, -3) }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Hính mặt trước CCCD:</th>
-                                    <td class="text-end d-flex">
-                                        <img src="{{ asset('images/' . $contractDetail->lessee->cccd_front_image) }}"
-                                            alt="" style="width: 100px; height: 100px">
+                                    <th>Thời Gian Ký:</th>
+                                    <td class="text-end">
+                                        {{ $contractDetail->contract->created_at }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Hính mặt sau CCCD:</th>
-                                    <td class="text-end d-flex">
-                                        <img src="{{ asset('images/' . $contractDetail->lessee->cccd_back_image) }}"
-                                            alt="" style="width: 100px; height: 100px">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Ký Hợp Đồng:</th>
+                                    <th>Trạng Thái:</th>    
                                     <td class="text-end">
                                         đã ký
                                     </td>
