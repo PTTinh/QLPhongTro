@@ -164,8 +164,8 @@ class LesseeController extends BaseController
             'job' => 'required',
             'dob' => 'required|date|before:' . now()->subYears(14)->format('Y-m-d'),
             'cccd_number' => 'required|numeric|unique:lessees,cccd_number',
-            'cccd_front_image' => 'nullable',
-            'cccd_back_image' => 'nullable',
+            'cccd_front_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'cccd_back_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
         if ($id) {
             $rules['phone'] = 'required|digits_between:10,11|numeric|unique:lessees,phone,' . $id;
@@ -184,7 +184,13 @@ class LesseeController extends BaseController
             'dob.before' => 'Người thuê phải từ 14 tuổi trở lên',
             'cccd_number.required' => 'Số CCCD không được để trống',
             'cccd_number.numeric' => 'Số CCCD không đúng định dạng',
-            'cccd_number.unique' => 'Số CCCD đã tồn tại'
+            'cccd_number.unique' => 'Số CCCD đã tồn tại',
+            'cccd_front_image.image' => 'Ảnh không đúng định dạng',
+            'cccd_front_image.mimes' => 'Ảnh không đúng định dạng',
+            'cccd_front_image.max' => 'Ảnh quá lớn',
+            'cccd_back_image.image' => 'Ảnh không đúng định dạng',
+            'cccd_back_image.mimes' => 'Ảnh không đúng định dạng',
+            'cccd_back_image.max' => 'Ảnh quá lớn'
         ];
         $request->validate($rules, $msg);
     }

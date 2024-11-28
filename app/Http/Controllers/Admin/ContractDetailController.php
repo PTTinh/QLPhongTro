@@ -7,6 +7,7 @@ use App\Models\Contract;
 use App\Models\ContractDetails;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContractDetailController extends Controller
 {
@@ -72,6 +73,7 @@ class ContractDetailController extends Controller
             $contractdetail['contract_id'] = $id;
             $contractdetail['id_lessee'] = $data['id_lessee'];
             $contractdetail->save();
+
         } else {
             $contractdetail['id_lessee'] = $data['id_lessee'];
             ContractDetails::create($contractdetail->toArray());
