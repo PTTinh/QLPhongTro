@@ -10,9 +10,9 @@ class AccountController extends Controller
     public function login()
     {
         if (Auth::check()) {
-            return redirect()->route('home')->with('success', 'Bạn đã đăng nhập');
+            return redirect()->route('home');
         }
-        return view('account.login')->with('warning', 'Vui lòng đăng nhập');
+        return view('account.login');
     }
     public function loginPost(Request $request)
     {
@@ -31,7 +31,7 @@ class AccountController extends Controller
 
         $data = $request->only('email', 'password');
         if (Auth::attempt($data)) {
-            return redirect()->route('rooms.index')->with('success', 'Đăng nhập thành công');
+            return redirect()->route('home')->with('success', 'Đăng nhập thành công');
         }
         return redirect()->route('login')->with('error', 'Đăng nhập thất bại, vui lòng kiểm tra lại email hoặc mật khẩu');
     }

@@ -40,6 +40,7 @@ class ContractController extends BaseController
         $data = $request->all();
         $data['created_date'] = date('Y-m-d');
         $data['created_by'] = Auth::id(); // Lấy id của user đang đăng nhập
+        Room::find($data['room_id'])->update(['status' => 1]);
         $contract = new Contract($data);
         $contract->save();
         return redirect()->route('contracts.index')->with('success', 'Thêm hợp đồng thành công');
@@ -77,6 +78,8 @@ class ContractController extends BaseController
         $data = $request->all();
         unset($data['_token']);
         $contract = Contract::find($id);
+        Room::find($contract->room_id)->update(['status' => 0]); // Cập nhật lại trạng thái phòng trọ cũ
+        Room::find($data['room_id'])->update(['status' => 1]); // Cập nhật lại trạng thái phòng trọ mới
         $contract->update($data);
         return redirect()->route('contracts.index')->with('success', 'Cập nhật hợp đồng thành công');
     }
@@ -94,16 +97,31 @@ class ContractController extends BaseController
         if (!$contract) { //Neu khong tim thay hop dong
             $alert = 'error';
             $message = 'Không tìm thấy hợp đồng';
-        }else{
+        } else {
             $contract->delete();
             $alert = 'success';
+            Room::find($contract->room_id)->update(['status' => 0]);
             $message = 'Xóa hợp đồng thành công';
         }
         return redirect()->route('contracts.index')->with($alert, $message);
     }
+
+    public function search(Request $request)
+    {
+        $room = Room::where('name', 'like', '%' . $request->search . '%')->first();
+        if ($room) {
+            $request->merge(['search' => $room->id]); //Nếu tìm thấy phòng trọ thì gán id phòng trọ vào biến search
+        }
+        $contracts = Contract::where('id', 'like', '%' . $request->search . '%')
+            ->orWhere('room_id', 'like', '%' . $request->search . '%')->get();
+        $rooms = Room::whereDoesntHave('Contract')->get();
+        $lessees = Lessee::whereDoesntHave('ContractDetails')->get();
+        return view('contract.index')->with('title', 'Quản lý hợp đồng')->with('contracts', $contracts)->with('rooms', $rooms)->with('lessees', $lessees);
+    }
+
     public function custom_validation($request, $id = null)
     {
-       $rules = [
+        $rules = [
             'start_date' => 'required|date|after:today',
             'end_date' => 'required|date|after:start_date',
             'month' => 'required|numeric|min:1',
@@ -113,7 +131,7 @@ class ContractController extends BaseController
             'room_id' => 'required|unique:contracts,room_id'
         ];
         if ($id) {
-            $rules['room_id'] = 'required|unique:contracts,room_id,' . $id; 
+            $rules['room_id'] = 'required|unique:contracts,room_id,' . $id;
         }
         $messages = [
             'start_date.required' => 'Ngày bắt đầu không được để trống',

@@ -18,9 +18,13 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="text-center">Hợp Đồng Thuê Phòng</h1>
-                    <div class="row mt-2">
+                    <div class="row mt-5   ">
                         <div class="col-lg-6">
                             <table class="table">
+                                <tr>
+                                    <th>Mã Hợp Đồng:</th>
+                                    <td class="text-end">{{ $contractDetail->contract->id }}</td>
+                                </tr>
                                 <tr>
                                     <th>Thuê Phòng:</th>
                                     <td class="text-end">{{ $contractDetail->contract->room->name }}</td>
@@ -126,6 +130,10 @@
                     <div class="row mt-2">
                         <div class="col-lg-6">
                             <table class="table">
+                                <tr>
+                                    <th>Mã Hợp Đồng:</th>
+                                    <td class="text-end">{{ $contractDetail->contract->id }}</td>
+                                </tr>
                                 <tr>
                                     <th>Thuê Phòng:</th>
                                     <td class="text-end">{{ $contractDetail->contract->room->name }}</td>

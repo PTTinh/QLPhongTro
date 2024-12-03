@@ -154,6 +154,20 @@ class LesseeController extends BaseController
         }
         return redirect()->route('lessees.index')->with($alert, $message);
     }
+
+    public function search(Request $request)
+    {
+        $lessees = Lessee::where('name', 'like', '%' . $request->search . '%')
+            ->orWhere('phone', 'like', '%' . $request->search . '%')
+            ->orWhere('email', 'like', '%' . $request->search . '%')
+            ->orWhere('address', 'like', '%' . $request->search . '%')
+            ->orWhere('job', 'like', '%' . $request->search . '%')
+            ->orWhere('dob', 'like', '%' . $request->search . '%')
+            ->orWhere('cccd_number', 'like', '%' . $request->search . '%')
+            ->get();
+        return view('lessee.index')->with('title', 'Quản lý người thuê')->with('lessees', $lessees);
+    }
+
     public function custom_validation($request, $id = null)
     {
         $rules = [

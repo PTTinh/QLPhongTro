@@ -2,6 +2,18 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">{{ $title }}</h1>
         <div class="btn-toolbar mb-2">
+
+            <form action="{{ route('rooms.search') }}" method="post" class="d-flex">
+                @csrf
+                <div class="input-group me-2">
+                    <span class="input-group-text" id="button-search">
+                        <i class='bx bx-search'></i>
+                    </span>
+                    <input type="text" class="form-control" name="search" placeholder="Tìm kiếm phòng"
+                        aria-label="Tìm kiếm phòng" aria-describedby="button-search">
+                    <button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
+                </div>
+            </form>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoomModal">
                 <i class='bx bx-plus me-2'></i>
                 Thêm Phòng
@@ -31,14 +43,13 @@
                         <td>{{ $room->usable_area }}m<sup>2</sup></td>
                         <td>{{ $room->capacity }} người</td>
                         <td>{{ number_format($room->price) }} VNĐ</td>
-                        <td>{{ isset($room->status) ? 'Còn trống' : 'Đã thuê' }}</td>
+                        <td>{{ $room->status == 0 ? 'Còn trống' : 'Đã có hợp đồng' }}</td>
                         <td>
                             <div class="d-none d-lg-flex justify-content-center gap-2">
-                                <button class="btn btn-primary js-edit-room" title="Sửa" 
-                                            data-id="{{ $room->id }}"
-                                            data-urlGet="{{ route('rooms.edit', $room->id) }}"
-                                            data-urlPut="{{ route('rooms.update', $room->id) }}">
-                                            <i class='bx bx-edit'></i>
+                                <button class="btn btn-primary js-edit-room" title="Sửa"
+                                    data-id="{{ $room->id }}" data-urlGet="{{ route('rooms.edit', $room->id) }}"
+                                    data-urlPut="{{ route('rooms.update', $room->id) }}">
+                                    <i class='bx bx-edit'></i>
                                 </button>
                                 <form action="{{ route('rooms.destroy', $room->id) }}" method="POST">
                                     @csrf
@@ -55,7 +66,7 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li class="d-flex align-items-center justify-content-center gap-1 ms-1 me-1">
-                                        <button class="btn btn-primary js-edit-room" title="Sửa" 
+                                        <button class="btn btn-primary js-edit-room" title="Sửa"
                                             data-id="{{ $room->id }}"
                                             data-urlGet="{{ route('rooms.edit', $room->id) }}"
                                             data-urlPut="{{ route('rooms.update', $room->id) }}">
@@ -89,14 +100,16 @@
                     <div class="mb-3">
                         <label for="area" class="form-label">Diện Tích</label>
                         <div class="input-group">
-                            <input type="number" name="area" id="area" class="form-control" placeholder="Nhập diện tích" required>
+                            <input type="number" name="area" id="area" class="form-control"
+                                placeholder="Nhập diện tích" required>
                             <span class="input-group-text">m<sup>2</sup></span>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="usable_area" class="form-label">Diện Tích Sử Dụng</label>
                         <div class="input-group">
-                            <input type="number" name="usable_area" id="usable_area" class="form-control" placeholder="Nhập diện tích sử dụng" required>
+                            <input type="number" name="usable_area" id="usable_area" class="form-control"
+                                placeholder="Nhập diện tích sử dụng" required>
                             <span class="input-group-text">m<sup>2</sup></span>
                         </div>
                     </div>
@@ -105,14 +118,16 @@
                     <div class="mb-3">
                         <label for="price" class="form-label">Giá Phòng</label>
                         <div class="input-group">
-                            <input type="number" name="price" id="price" class="form-control" placeholder="Nhập giá phòng" required>
+                            <input type="number" name="price" id="price" class="form-control"
+                                placeholder="Nhập giá phòng" required>
                             <span class="input-group-text">VNĐ</span>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="capacity" class="form-label">Số Người Ở</label>
                         <div class="input-group">
-                            <input type="number" name="capacity" id="capacity" class="form-control" placeholder="Nhập số người ở" required>
+                            <input type="number" name="capacity" id="capacity" class="form-control"
+                                placeholder="Nhập số người ở" required>
                             <span class="input-group-text">Người</span>
                         </div>
                     </div>
@@ -140,14 +155,16 @@
                     <div class="mb-3">
                         <label for="area-update" class="form-label">Diện Tích</label>
                         <div class="input-group">
-                            <input type="number" name="area" id="area-update" class="form-control" placeholder="Nhập diện tích" required>
+                            <input type="number" name="area" id="area-update" class="form-control"
+                                placeholder="Nhập diện tích" required>
                             <span class="input-group-text">m<sup>2</sup></span>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="usable_area-update" class="form-label">Diện Tích Sử Dụng</label>
                         <div class="input-group">
-                            <input type="number" name="usable_area" id="usable_area-update" class="form-control" placeholder="Nhập diện tích sử dụng" required>
+                            <input type="number" name="usable_area" id="usable_area-update" class="form-control"
+                                placeholder="Nhập diện tích sử dụng" required>
                             <span class="input-group-text">m<sup>2</sup></span>
                         </div>
                     </div>
@@ -156,14 +173,16 @@
                     <div class="mb-3">
                         <label for="price-update" class="form-label">Giá Phòng</label>
                         <div class="input-group">
-                            <input type="number" name="price" id="price-update" class="form-control" placeholder="Nhập giá phòng" required>
+                            <input type="number" name="price" id="price-update" class="form-control"
+                                placeholder="Nhập giá phòng" required>
                             <span class="input-group-text">VNĐ</span>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="capacity-update" class="form-label">Số Người Ở</label>
                         <div class="input-group">
-                            <input type="number" name="capacity" id="capacity-update" class="form-control" placeholder="Nhập số người ở" required>
+                            <input type="number" name="capacity" id="capacity-update" class="form-control"
+                                placeholder="Nhập số người ở" required>
                             <span class="input-group-text">Người</span>
                         </div>
                     </div>

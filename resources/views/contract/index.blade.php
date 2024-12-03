@@ -2,6 +2,17 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">{{ $title }}</h1>
         <div class="btn-toolbar mb-2">
+            <form action="{{ route('contracts.search') }}" method="post" class="d-flex">
+                @csrf
+                <div class="input-group me-2">
+                    <span class="input-group-text" id="button-search">
+                        <i class='bx bx-search'></i>
+                    </span>
+                    <input type="text" class="form-control" name="search" placeholder="Tìm kiếm hợp đồng"
+                        aria-label="Tìm kiếm hợp đồng" aria-describedby="button-search">
+                    <button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
+                </div>
+            </form>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addContractModal">
                 <i class='bx bx-plus me-2'></i>
                 Thêm Hợp Đồng
@@ -13,7 +24,7 @@
             <thead class="table-dark">
                 <tr class="text-center">
                     <th scope="col">TT</th>
-                    <th scope="col" class="text-truncate" style="max-width: 100px;">Tên người Tạo</th>
+                    <th scope="col" class="text-truncate" style="max-width: 100px;">Mã hợp đồng</th>
                     <th scope="col" class="text-truncate" style="max-width: 100px;">Phòng</th>
                     <th scope="col" class="text-truncate" style="max-width: 100px;">Ngày tạo</th>
                     <th scope="col" class="text-truncate" style="max-width: 100px;">Ngày bắt đầu</th>
@@ -25,7 +36,7 @@
                 @foreach ($contracts as $contract)
                     <tr class="text-center">
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $contract->user->name }}</td>
+                        <td>{{ $contract->id }}</td>
                         <td>{{ $contract->room->name }}</td>
                         <td>{{ $contract->created_at }}</td>
                         <td>{{ $contract->start_date }}</td>
@@ -98,7 +109,9 @@
                                     <option value="">Không có phòng nào</option>
                                 @endif
                                 @foreach ($rooms as $room)
-                                    <option value="{{ $room->id }}">{{ $room->name }}</option>
+                                    <option value="{{ $room->id }}" @if (old('room_id') == $room->id) selected @endif>
+                                        {{ $room->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -109,7 +122,7 @@
                         <div class="mb-3">
                             <label for="month" class="form-label">Số Tháng</label>
                             <div class="input-group">
-                                <input type="number" name="month" id="month" class="form-control"
+                                <input type="number" name="month" id="month" class="form-control" value="{{ old('month') }}"
                                     placeholder="Nhập số tháng" required>
                                 <span class="input-group-text">Tháng</span>
                             </div>
@@ -120,23 +133,23 @@
                             <label for="price_eletric" class="form-label">Giá Điện</label>
                             <div class="input-group">
                                 <input type="number" name="price_eletric" id="price_eletric" class="form-control"
-                                    placeholder="Nhập giá điện" required>
-                                <span class="input-group-text">VNĐ/số</span>
+                                    placeholder="Nhập giá điện" value="{{ old('price_eletric') }}" required>
+                                <span class="input-group-text">VNĐ/KWh</span>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="price_water" class="form-label">Giá Nước</label>
                             <div class="input-group">
-                                <input type="number" name="price_water" id="price_water" class="form-control"
-                                    placeholder="Nhập giá nước" required>
-                                <span class="input-group-text">VNĐ/số</span>
+                                <input type="number" name="price_water" id="price_water" class="form-control" 
+                                    placeholder="Nhập giá nước" value="{{ old('price_water') }}" required>
+                                <span class="input-group-text">VNĐ/m<sup>3</sup></span>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="other_fees" class="form-label">Phí Khác</label>
                             <div class="input-group">
                                 <input type="number" name="other_fees" id="other_fees" class="form-control"
-                                    placeholder="Nhập phí khác" required>
+                                    placeholder="Nhập phí khác" value="{{ old('other_fees') }}" required>
                                 <span class="input-group-text">VNĐ</span>
                             </div>
                         </div>
@@ -180,7 +193,7 @@
                             <div class="input-group">
                                 <input type="number" name="price_eletric" id="price_eletric-update" class="form-control"
                                     placeholder="Nhập giá điện" required>
-                                <span class="input-group-text">VNĐ/số</span>
+                                <span class="input-group-text">VNĐ/KWh</span>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -188,7 +201,7 @@
                             <div class="input-group">
                                 <input type="number" name="price_water" id="price_water-update" class="form-control"
                                     placeholder="Nhập giá nước" required>
-                                <span class="input-group-text">VNĐ/số</span>
+                                <span class="input-group-text">VNĐ/m<sup>3</sup></span>
                             </div>
                         </div>
                         <div class="mb-3">

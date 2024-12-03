@@ -69,6 +69,9 @@ class ContractDetailController extends Controller
         if ($count >= $capacity) {
             return redirect()->route('contracts.show', $id)->with('error', 'Hợp đồng đã đủ người thuê');
         }
+        if(ContractDetails::where('contract_id', $id)->where('id_lessee', $data['id_lessee'])->count() > 0){
+            return redirect()->route('contracts.show', $id)->with('error', 'Người thuê đã tồn tại trong hợp đồng');
+        }
         $contractdetail = new ContractDetails();
         $contractdetail['contract_id'] = $id;
         $contractdetail['id_lessee'] = $data['id_lessee'];

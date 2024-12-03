@@ -2,6 +2,16 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">{{ $title }}</h1>
         <div class="btn-toolbar mb-2">
+            <form action="{{ route('lessees.search') }}" method="post" class="d-flex">
+                @csrf
+                <div class="input-group me-2">
+                    <span class="input-group-text" id="button-search">
+                        <i class='bx bx-search'></i>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Tìm kiếm người thuê" aria-label="Tìm kiếm người thuê" aria-describedby="button-search" name="search">
+                    <button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
+                </div>
+            </form>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLesseeModal">
                 <i class='bx bx-plus me-2'></i>
                 Thêm Người Thuê

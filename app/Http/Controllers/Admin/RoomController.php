@@ -96,6 +96,13 @@ class RoomController extends BaseController
         }
         return redirect()->route('rooms.index')->with($alert, $message);
     }
+
+    public function search(Request $request)
+    {
+        $rooms = Room::where('name', 'like', '%' . $request->search . '%')->get();
+        return view('rooms.index')->with('title', 'Quản lý phòng trọ')->with('rooms', $rooms);
+    }
+    
     public function custom_validation($request)
     {
         $rules = [

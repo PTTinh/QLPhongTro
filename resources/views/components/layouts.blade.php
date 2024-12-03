@@ -44,6 +44,12 @@
                     <div class="offcanvas-body d-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                         <ul class="nav flex-column list-group">
                             <li class="nav-item">
+
+                                <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('/') ? 'myactive' : '' }}"
+                                    href="/">
+                                    <i class='bx bx-home nav-icon'></i>
+                                    Home
+                                </a>
                                 <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('rooms') ? 'myactive' : '' }}"
                                     href="/rooms">
                                     <i class='bx bx-home'></i>
@@ -56,7 +62,7 @@
                                 </a>
                                 <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('contracts') ? 'myactive' : '' }}"
                                     href="/contracts">
-                                    <i class='bx bx-file nav-icon'></i>
+                                    <i class='bx bx-file nav-icon'></i> 
                                     Hợp Đồng
                                 </a>
                                 {{-- <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('contract-details') ? 'myactive' : '' }}"
@@ -71,15 +77,10 @@
 
                         <ul class="list-group-item nav flex-column mb-auto list-group">
                             <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center gap-2" href="#">
-                                    <i class='bx bx-cog'></i>
-                                    Settings
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <form action="{{ route('logout') }}" method="GET">
                                     @csrf
-                                    <button class="nav-link d-flex align-items-center gap-2" type="submit">
+                                    <button class="nav-link d-flex align-items-center gap-2" type="submit"
+                                        onclick="return confirm('Bạn có chắc chắn muốn đăng xuất không?')">
                                         <i class='bx bx-door-open'></i>
                                         Sign out
                                     </button>
@@ -107,6 +108,7 @@
             <p class="text-center text-body-secondary">&copy; 2024 Company, Inc</p>
         </footer>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ asset('lib/bootstrap-5.3.3-dist/js/bootstrap.bundle.min.js') }}"></script>
     {{ $script ?? '' }}
 </body>

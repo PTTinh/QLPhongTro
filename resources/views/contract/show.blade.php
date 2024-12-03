@@ -73,6 +73,10 @@
                 <div class="col-lg-6">
                     <table class="table">
                         <tr>
+                            <th>Mã Hợp Đồng:</th>
+                            <td class="text-end">{{ $contract->id }}</td>
+                        </tr>
+                        <tr>
                             <th>Thuê Phòng:</th>
                             <td class="text-end">{{ $contract->room->name }}</td>
                         </tr>
@@ -98,11 +102,11 @@
                         </tr>
                         <tr>
                             <th>Giá Điện:</th>
-                            <td class="text-end">{{ number_format($contract->price_eletric) }} VNĐ/số</td>
+                            <td class="text-end">{{ number_format($contract->price_eletric) }} VNĐ/KWh</td>
                         </tr>
                         <tr>
                             <th>Giá Nước:</th>
-                            <td class="text-end">{{ number_format($contract->price_water) }} VNĐ/số</td>
+                            <td class="text-end">{{ number_format($contract->price_water) }} VNĐ/m<sup>3</sup></td>
                         </tr>
                         <tr>
                             <th>Phí Khác:</th>
