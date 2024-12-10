@@ -8,7 +8,6 @@
            
         </div>
     </div>
-    <h2 class="h4">Thống kê</h2>
     <div class="row">
         <div class="col-lg-4 mt-2">
             <div class="card text-white bg-info mb-3">
@@ -41,8 +40,8 @@
     <x-slot:script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            var ctx = document.getElementById('rooms').getContext('2d');
-            var myPieChart = new Chart(ctx, {
+            var ctx1 = document.getElementById('rooms').getContext('2d');
+            var myPieChart1 = new Chart(ctx1, {
                 type: 'pie',
                 data: {
                     labels: ['Phòng trống', 'Phòng đã thuê'],
@@ -57,8 +56,8 @@
                     }]
                 }
             });
-            var ctx = document.getElementById('lessee').getContext('2d');
-            var myPieChart = new Chart(ctx, {
+            var ctx2 = document.getElementById('lessee').getContext('2d');
+            var myPieChart2 = new Chart(ctx2, {
                 type: 'pie',
                 data: {
                     labels: ['Người đã thuê', 'Người chưa thuê'],
@@ -73,8 +72,8 @@
                     }]
                 }
             });
-            var ctx = document.getElementById('expiringContracts').getContext('2d');
-            var myPieChart = new Chart(ctx, {
+            var ctx3 = document.getElementById('expiringContracts').getContext('2d');
+            var myPieChart3 = new Chart(ctx3, {
                 type: 'pie',
                 data: {
                     labels: ['Hợp đồng sắp hết hạn', 'Hợp đồng còn hạn'],

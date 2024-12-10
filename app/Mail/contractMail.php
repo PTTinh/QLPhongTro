@@ -30,7 +30,7 @@ class contractMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Mail ký hợp đồng',
+            subject: 'Hợp đồng thuê Trọ',
         );
     }
 

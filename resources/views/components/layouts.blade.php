@@ -47,8 +47,8 @@
 
                                 <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('/') ? 'myactive' : '' }}"
                                     href="/">
-                                    <i class='bx bx-home nav-icon'></i>
-                                    Home
+                                    <i class='bx bx-pie-chart-alt-2'></i>
+                                    Thông kê
                                 </a>
                                 <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('rooms') ? 'myactive' : '' }}"
                                     href="/rooms">
@@ -65,11 +65,6 @@
                                     <i class='bx bx-file nav-icon'></i> 
                                     Hợp Đồng
                                 </a>
-                                {{-- <a class="list-group-item nav-link d-flex align-items-center gap-2 {{ request()->is('contract-details') ? 'myactive' : '' }}"
-                                    href="/contract-details">
-                                    <i class='bx bx-file nav-icon'></i>
-                                    Chi tiết hợp đồng
-                                </a> --}}
                             </li>
                         </ul>
 
@@ -82,7 +77,7 @@
                                     <button class="nav-link d-flex align-items-center gap-2" type="submit"
                                         onclick="return confirm('Bạn có chắc chắn muốn đăng xuất không?')">
                                         <i class='bx bx-door-open'></i>
-                                        Sign out
+                                        Đăng xuất
                                     </button>
                                 </form>
                             </li>

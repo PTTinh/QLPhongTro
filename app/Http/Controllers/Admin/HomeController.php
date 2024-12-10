@@ -21,7 +21,7 @@ class HomeController extends BaseController
         $occupiedLesseeCount = Lessee::whereHas('contractDetails')->count();
         $expiringContractsCount = Contract::where('end_date', '<', now()->addMonth())->count();
         $validContractsCount = Contract::where('end_date', '>', now()->addMonth())->count();
-        return view('home')->with('title', 'Home')
+        return view('home')->with('title', 'Thống kê')
                             ->with('roomCount', $roomCount)
                             ->with('LesseeCount', $LesseeCount)
                             ->with('expiringContractsCount', $expiringContractsCount)
